@@ -67,18 +67,18 @@ Projeyi kurmak ve çalıştırmak için aşağıdaki adımları takip edin:
 
 - `backend/`: Spring Boot backend uygulaması
 - `backend/src/main/java/com/example/ProjeStaj/modal/`: JPA modal classları bulunur. Bunlar User, HospitalRecord, Session.
-- `backend/src/main/java/com/example/ProjeStaj/repository/` : Modal classların reposity interface'leri bulunur. Bunlar UserRepository, RecordRepository, SessionRepository.
+- `backend/src/main/java/com/example/ProjeStaj/repository/` : Modal classların repository interface'leri bulunur. Bunlar UserRepository, RecordRepository, SessionRepository.
 - `backend/src/main/java/com/example/ProjeStaj/controller/` : Controller enppointleri bulunur. Bunlar LoginController, RecordController, RegisterController, SessionController.  
  **LoginController da** 2 tane endpoit bulunur. Bu endpointler login ve logout işlemlerini gerçekleştirir.  
  **RegisterController da** post endpoit bulunur. Ayrıca Random olarak 7 basamakalı hospitalId üreten generateRandomHospitalId metodu da bu Controller da bulunur. Üretilen bu değerler tekildir.  
  **RecordController da** kayıtları listeleyen, arama yapan, ekleme yapan, güncelleme yapan ve silme işlemini yapan endpointler bulunur.  
  **SessionController da** isLoggin endpoiti bulunur. Bu endpoint eğer session başlatılmamışsa kullanıcıların url adreslerine erişimini geriye dönderdiği ResponseEntity status değeri ile engeller.
     
-- `backend/src/main/java/com/example/ProjeStaj/services/` : Servis classlarım burada bulunur. Bunlar SearchService ve ImageService.
-  **ImageService** seçilen resmi static dosyası içindeki image klasörüne resim adının önüne anlık tarih saat verisi ekleyerek kopyalar. Değişen resmin adı ise veritabanında ilgili alanda saklanır.
-  **SearchService**  farklı yerlerde search işlemi yapmak istenirse birbirinden ayrılmış repository çağrıları bulunur ve böylece kod tekrarının önüne geçilmiş olur.
+- `backend/src/main/java/com/example/ProjeStaj/services/` : Servis classları burada bulunur. Bunlar SearchService ve ImageService.
+  **ImageService** seçilen resmi static/image klasörüne resim adının önüne anlık tarih saat verisi ekleyerek kopyalar. Değişen resmin adı ise veritabanında ilgili alanda saklanır.
+  **SearchService**  farklı yerlerde search işlemi yapmak istendiğinde kod tekrarını engellemek için yazılmıştır. Birbirinden ayrılmış repository çağrıları bulunur.
 
-- `backend/src/main/java/com/example/ProjeStaj/config/` : Config classlarım burada bulunur. Bunlar CookieConfig ve WebConfig.
+- `backend/src/main/java/com/example/ProjeStaj/config/` : Config classları burada bulunur. Bunlar CookieConfig ve WebConfig.
   **CookieConfig** config classında cookieSerializer metodu bir CookieSerializer bean'i oluşturur. Bu bean, oturum çerezlerinin nasıl oluşturulup yönetileceğini tanımlar.
   **WebConfig** config clası WebMvcConfigurer interface ini implemente ederek HTTP isteklerini yönetmek için CORS ayarlarını yapılandırır.
 
@@ -89,14 +89,14 @@ Projeyi kurmak ve çalıştırmak için aşağıdaki adımları takip edin:
 - `/frontend/src/layout/` : Navbar.js classı burada bulunur.
 - - `/frontend/src/pages/` : login.js, register.js ve anasayfa.js clasları burada bulunur.
 
-Projede 2 farklı port kullanımı olduğu için CORS ayarlarını düzenlememiz gerekir. Kullanıcı yönetimi (admin/user) sağlamak için session kullanıldı ve session kullanımında sorun çıkmaması için tarayıcıdan 
-site çerez kullanımı için izin almak gerekiyor. Kullanıcı yönetimi ile işlem kısıtı sağlanıyor böylece istenen kullanıcının erişimini kısıtlayabiliriz. Login yaptıktan sonra session başlatılır ve session
+Projede 2 farklı port kullanımı olduğu için CORS ayarları düzenlenmelidir. Kullanıcı yönetimini (admin/user) sağlamak için session kullanıldı ve session kullanımında sorun çıkmaması için tarayıcıdan 
+site çerez kullanımı için izin alınması gerekir. Kullanıcı yönetimi ile işlem kısıtı sağlanır ve böylece istenen kullanıcının erişimini kısıtlanır. Login yapıldıktan sonra session başlatılır ve session
 modal a ilgili setler yapıldıktan sonra veritabanına kayıt gerçekleştirilir. Logout yapınca ise ilgili session reposu silinir. Bunun amacı session başladıktan sonra giriş yapan kullanıcının type ve id değerlerine
 kolayca erişmektir. Bu şekilde session yönetimi daha hızlı bir şekilde gerçekleştirilir. Eğer session başlatılmamışsa (login yapılmamışsa) kullanıcılar diğer sayfalara erişemez bu da site ve server için güvenlik
-sağlamaktadır. Backend de kullanılan servisler sayesinde başka metotlarda aynı işlemleri gerçekleştirmek istenirse kod tekrarın önüne geçilmiş olacak ve daha hızlı iletişim kurulacaktır.
+zaafiyetlerinin önüne geçmeyi sağlar. Backend de kullanılan servisler sayesinde başka metotlarda aynı işlemleri gerçekleştirmek istenirse kod tekrarın önüne geçilmiş olacak ve daha hızlı iletişim kurulacaktır.
 
-Bu proje tek başıma yaptığım ilk full-stack projesidir  ve daha önce react, spring teknolojilerini kullanmamıştım. 
-İlgi alanım web-backend olmasına rağmen boostrap kullanarak basit bir UI ile yaptığım ilk frontend projemdir.
+Bu proje tek başıma yaptığım ilk full-stack projesidir ve daha önce react, spring teknolojilerinde proje tecrübem yoktu. 
+Ayrıca ilgi alanım web-backend olmasına rağmen boostrap kullanarak basit ve kullanışlı bir UI ile yaptığım ilk frontend projemdir.
 Projeyi yapma amacım farklı teknolojilere daha hızlı uyum sağlamaktır.
 Proje Resimleri altta bulunmaktadır.
 
