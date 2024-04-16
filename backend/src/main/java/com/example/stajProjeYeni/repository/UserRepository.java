@@ -1,6 +1,8 @@
-package com.example.ProjeStaj.repository;
-import  org.springframework.data.jpa.repository.JpaRepository;
-import  com.example.ProjeStaj.modal.User;
+package com.example.stajProjeYeni.repository;
+
+import com.example.stajProjeYeni.modal.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 public interface UserRepository extends JpaRepository<User,Long> {
 
     User findByUserNameAndPassword(String userName,String password);

@@ -1,4 +1,4 @@
-package com.example.ProjeStaj.controller;
+package com.example.stajProjeYeni.services;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,6 @@ public class ImageService {
     private String uploadDir;
 
     public String saveImage(MultipartFile imageFile) throws IOException {
-
         //anlık saat tarih verisini alıp kayıt yapılacak şekilde formatlama işlemi
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss");

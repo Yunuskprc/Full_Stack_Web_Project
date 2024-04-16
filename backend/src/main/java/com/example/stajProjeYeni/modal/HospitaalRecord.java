@@ -1,13 +1,12 @@
-package com.example.ProjeStaj.modal;
+package com.example.stajProjeYeni.modal;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class HospitaalRecord {
@@ -20,7 +19,7 @@ public class HospitaalRecord {
     private String hastaTaniBaslik;
     @Column(columnDefinition = "TEXT")
     private String hastaTaniDetay;
-    private LocalDate kayitTarih;
+    private LocalDateTime kayitTarih;
     private String resimURL;
 
     public long getDosyaİd() {
@@ -47,7 +46,7 @@ public class HospitaalRecord {
         return hastaTaniDetay;
     }
 
-    public LocalDate getKayitTarih() {
+    public LocalDateTime getKayitTarih() {
         return kayitTarih;
     }
 
@@ -79,7 +78,7 @@ public class HospitaalRecord {
         this.hastaTaniDetay = hastaTaniDetay;
     }
 
-    public void setKayitTarih(LocalDate kayitTarih) {
+    public void setKayitTarih(LocalDateTime kayitTarih) {
         this.kayitTarih = kayitTarih;
     }
 

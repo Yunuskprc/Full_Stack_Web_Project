@@ -1,8 +1,7 @@
-package com.example.ProjeStaj.controller;
+package com.example.stajProjeYeni.contoller;
 
-import com.example.ProjeStaj.modal.RegisterModal;
-import com.example.ProjeStaj.modal.User;
-import com.example.ProjeStaj.repository.UserRepository;
+import com.example.stajProjeYeni.modal.User;
+import com.example.stajProjeYeni.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.Random;
 
 @RestController
@@ -21,11 +21,11 @@ public class RegisterController {
     private UserRepository userRepository;
 
     @PostMapping("/Register")
-    public ResponseEntity<String> registerControl(@RequestBody RegisterModal request) {
+    public ResponseEntity<String> registerControl(@RequestBody User request) {
         String userName = request.getUserName();
         String password = request.getPassword();
         String name = request.getName();
-        String last_name = request.getLast_name();
+        String last_name = request.getLastName();
         long type = 1;
 
         User user = userRepository.findByUserNameAndPassword(userName, password);
@@ -35,7 +35,7 @@ public class RegisterController {
             long randomHospitalId = generateRandomHospitalId();
 
             while (userRepository.findByHospitalId(randomHospitalId) != null) {
-                randomHospitalId = generateRandomHospitalId(); // Yeniden rastgele bir sayı oluştur
+                randomHospitalId = generateRandomHospitalId();
             }
 
             User newUser = new User();

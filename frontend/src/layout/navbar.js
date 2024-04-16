@@ -2,7 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+
 function Navbar() {
+
+  
   const handleClick = () => {
     axios.get('http://localhost:8080/logOut', {
         withCredentials: true 

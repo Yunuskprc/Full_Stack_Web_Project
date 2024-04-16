@@ -1,9 +1,11 @@
 import Navbar from '../layout/navbar';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {useNavigate } from 'react-router-dom';
 
 function KayitGuncelle() {
     const [rows, setRows] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get('http://localhost:8080/kayitGoster')
@@ -34,6 +36,20 @@ function KayitGuncelle() {
                 window.alert("Güncelleme yaparken bir sorun oldu tekrar deneyin");
             });
     };
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/isLoggin', { withCredentials: true })
+            .then(response => {
+               
+            })
+            .catch(error => {
+                console.error('Kullanıcı durumu kontrol edilirken bir hata oluştu:', error);
+                if (error.response && error.response.status === 404 && error.response.data === "Lütfen giriş yapınız") {
+                    window.alert("Lütfen giriş yapınız");
+                }
+                navigate('/');
+            });
+    }, [navigate]);
 
     return (
         <>

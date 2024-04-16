@@ -1,4 +1,4 @@
-package com.example.ProjeStaj.modal;
+package com.example.stajProjeYeni.modal;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

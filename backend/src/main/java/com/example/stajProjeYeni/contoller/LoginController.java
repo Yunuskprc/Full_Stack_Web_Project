@@ -1,20 +1,21 @@
-package com.example.ProjeStaj.controller;
+package com.example.stajProjeYeni.contoller;
 
-import com.example.ProjeStaj.repository.SessionRepository;
-import com.example.ProjeStaj.repository.UserRepository;
+import com.example.stajProjeYeni.modal.Session;
+import com.example.stajProjeYeni.modal.User;
+import com.example.stajProjeYeni.repository.SessionRepository;
+import com.example.stajProjeYeni.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.example.ProjeStaj.modal.LoginRequest;
-import com.example.ProjeStaj.modal.User;
-import com.example.ProjeStaj.modal.Session;
+
+
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000/")
 public class LoginController {
 
     @Autowired
@@ -24,47 +25,41 @@ public class LoginController {
     private SessionRepository  sessionRepository;
 
     @PostMapping("/Login")
-    ResponseEntity<String> loginControl(@RequestBody LoginRequest request, HttpSession session){
+    ResponseEntity<String> loginControl(@RequestBody User request, HttpSession session){
 
         String userName = request.getUserName();
         String password = request.getPassword();
         User user = userRepository.findByUserNameAndPassword(userName,password);
-        System.out.println(userName + "   " + password);
+
 
         if(user != null){
             LocalDateTime now = LocalDateTime.now();
             session.setAttribute("sessionId", session.getId());
-            System.out.println(session.getAttribute("sessionId"));
             Session newSession = new  Session();
             newSession.setSessionNo(session.getId());
+
             newSession.setId(user.getId());
             newSession.setType(user.getType());
             newSession.setOturumBaslangic(now);
             sessionRepository.save(newSession);
-            System.out.println(session.getId());
+
             return ResponseEntity.ok("Giriş Başarılı");
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Kullanıcı adı veya şifre hatalı");
         }
     }
 
+
     @GetMapping("/logOut")
-    ResponseEntity<String> logOutControl(HttpSession session){
-        String userId = (String) session.getAttribute("sessionId");
-        System.out.println(userId);
-        if (userId != null) {
-            LocalDateTime now = LocalDateTime.now();
-            Session updateSession = sessionRepository.findBySessionNo(userId);
-            updateSession.setOturumBitis(now);
-            sessionRepository.save(updateSession);
+    @Transactional
+    public ResponseEntity<String> logOutControl(HttpSession session) {
+
+        String sessionId = (String) session.getAttribute("sessionId");
+        if (sessionId != null) {
+            sessionRepository.deleteBysessionNo(sessionId);
         }
-
-        session.invalidate(); // Oturumu sonlandır
-
+        session.invalidate();
         return ResponseEntity.ok("Başarıyla çıkış yapıldı");
     }
-
-
-
 
 }
